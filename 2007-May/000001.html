@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Echomine SVN] r108 - in feridian/trunk/modules/jabber-compat:	bindings src/main/java/com/echomine/jabber/compat/packet	src/main/resources/META-INF	src/test/java/com/echomine/jabber/compat/packet
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/echomine-svn/2007-May/index.html" >
+   <LINK REL="made" HREF="mailto:echomine-svn%40lists.berlios.de?Subject=Re%3A%20%5BEchomine%20SVN%5D%20r108%20-%20in%20feridian/trunk/modules/jabber-compat%3A%0A%09bindings%20src/main/java/com/echomine/jabber/compat/packet%0A%09src/main/resources/META-INF%0A%09src/test/java/com/echomine/jabber/compat/packet&In-Reply-To=%3C200705311513.l4VFDCLf014311%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000000.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Echomine SVN] r108 - in feridian/trunk/modules/jabber-compat:	bindings src/main/java/com/echomine/jabber/compat/packet	src/main/resources/META-INF	src/test/java/com/echomine/jabber/compat/packet</H1>
+    <B>Echomine SVN</B> 
+    <A HREF="mailto:echomine-svn%40lists.berlios.de?Subject=Re%3A%20%5BEchomine%20SVN%5D%20r108%20-%20in%20feridian/trunk/modules/jabber-compat%3A%0A%09bindings%20src/main/java/com/echomine/jabber/compat/packet%0A%09src/main/resources/META-INF%0A%09src/test/java/com/echomine/jabber/compat/packet&In-Reply-To=%3C200705311513.l4VFDCLf014311%40sheep.berlios.de%3E"
+       TITLE="[Echomine SVN] r108 - in feridian/trunk/modules/jabber-compat:	bindings src/main/java/com/echomine/jabber/compat/packet	src/main/resources/META-INF	src/test/java/com/echomine/jabber/compat/packet">echomine-svn at lists.berlios.de
+       </A><BR>
+    <I>Thu May 31 17:13:12 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000000.html">[Echomine-svn] r107 - in	feridian/trunk/modules/jabber-compat/src/test:	java/com/echomine/jabber java/com/echomine/jabber/compat	java/com/echomine/jabber/compat/auth	java/com/echomine/jabber/compat/packet resources/com/echomine/jabber	resources/com/echomine/jabber/compat
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: jdevelop
+Date: 2007-05-31 17:12:52 +0200 (Thu, 31 May 2007)
+New Revision: 108
+
+Added:
+   feridian/trunk/modules/jabber-compat/bindings/jep-0100-binding.xml
+   feridian/trunk/modules/jabber-compat/src/main/java/com/echomine/jabber/compat/packet/GatewayIQPacket.java
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/GatewayIQPacketTest.java
+Modified:
+   feridian/trunk/modules/jabber-compat/src/main/resources/META-INF/feridian-extensions.xml
+Log:
+Added gateway packet bindings and mappings, as per JEP-0100 specification
+
+
+Added: feridian/trunk/modules/jabber-compat/bindings/jep-0100-binding.xml
+===================================================================
+--- feridian/trunk/modules/jabber-compat/bindings/jep-0100-binding.xml	2007-05-05 06:25:10 UTC (rev 107)
++++ feridian/trunk/modules/jabber-compat/bindings/jep-0100-binding.xml	2007-05-31 15:12:52 UTC (rev 108)
+@@ -0,0 +1,14 @@
++&lt;!-- Binding for JEP-0100: Gateway interaction --&gt;
++&lt;binding&gt;
++    &lt;!-- setup serializers/deserializers --&gt;
++    &lt;format type=&quot;com.echomine.xmpp.JID&quot; serializer=&quot;com.echomine.xmpp.JID.toString&quot;
++	deserializer=&quot;com.echomine.xmpp.JID.parseJID&quot;/&gt;
++
++    &lt;mapping name=&quot;query&quot; ns=&quot;jabber:iq:gateway&quot; ordered='false'
++	class=&quot;com.echomine.jabber.compat.packet.GatewayIQPacket&quot;&gt;
++	&lt;namespace uri=&quot;jabber:iq:gateway&quot; default=&quot;elements&quot;/&gt;
++	&lt;value style=&quot;element&quot; name=&quot;desc&quot; field=&quot;desc&quot; usage=&quot;optional&quot; /&gt;
++	&lt;value style=&quot;element&quot; name=&quot;prompt&quot; field=&quot;prompt&quot; usage=&quot;optional&quot; /&gt;
++	&lt;value style=&quot;element&quot; name=&quot;jid&quot; field=&quot;jid&quot; usage=&quot;optional&quot; /&gt;
++    &lt;/mapping&gt;
++&lt;/binding&gt;
+
+Added: feridian/trunk/modules/jabber-compat/src/main/java/com/echomine/jabber/compat/packet/GatewayIQPacket.java
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/main/java/com/echomine/jabber/compat/packet/GatewayIQPacket.java	2007-05-05 06:25:10 UTC (rev 107)
++++ feridian/trunk/modules/jabber-compat/src/main/java/com/echomine/jabber/compat/packet/GatewayIQPacket.java	2007-05-31 15:12:52 UTC (rev 108)
+@@ -0,0 +1,80 @@
++package com.echomine.jabber.compat.packet;
++
++import com.echomine.xmpp.JID;
++import com.echomine.xmpp.packet.IQPacket;
++
++/**
++ * Packet implementation for gateway interaction
++ * &lt;a href=&quot;<A HREF="http://www.xmpp.org/extensions/xep-0100.html#addressing-iqgateway">http://www.xmpp.org/extensions/xep-0100.html#addressing-iqgateway</A>&quot;&gt;XEP-0100&lt;/a&gt;
++ */
++public class GatewayIQPacket extends IQPacket {
++
++    /**
++     * Description
++     */
++    private String desc;
++
++    /**
++     * Promt message
++     */
++    private String prompt;
++
++    /**
++     * Jabber ID for user, escaped and returned by transport
++     */
++    private JID jid;
++
++    public GatewayIQPacket() {
++        desc = prompt = null;
++        jid = null;
++    }
++
++    public GatewayIQPacket(String desc, String prompt, JID jid) {
++        this.desc = desc;
++        this.prompt = prompt;
++        this.jid = jid;
++    }
++
++    /**
++     * @return the desc
++     */
++    public String getDesc() {
++        return desc;
++    }
++
++    /**
++     * @param desc the desc to set
++     */
++    public void setDesc(String desc) {
++        this.desc = desc;
++    }
++
++    /**
++     * @return the jid
++     */
++    public JID getJid() {
++        return jid;
++    }
++
++    /**
++     * @param jid the jid to set
++     */
++    public void setJid(JID jid) {
++        this.jid = jid;
++    }
++
++    /**
++     * @return the promt
++     */
++    public String getPrompt() {
++        return prompt;
++    }
++
++    /**
++     * @param promt the promt to set
++     */
++    public void setPrompt(String promt) {
++        this.prompt = promt;
++    }
++
++}
+
+Modified: feridian/trunk/modules/jabber-compat/src/main/resources/META-INF/feridian-extensions.xml
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/main/resources/META-INF/feridian-extensions.xml	2007-05-05 06:25:10 UTC (rev 107)
++++ feridian/trunk/modules/jabber-compat/src/main/resources/META-INF/feridian-extensions.xml	2007-05-31 15:12:52 UTC (rev 108)
+@@ -6,5 +6,6 @@
+     &lt;packet ns=&quot;jabber:iq:auth&quot; class=&quot;com.echomine.jabber.compat.packet.AuthIQPacket&quot;/&gt;
+     &lt;packet ns=&quot;jabber:iq:version&quot; class=&quot;com.echomine.jabber.compat.packet.VersionIQPacket&quot;/&gt;
+     &lt;packet ns=&quot;jabber:iq:register&quot; class=&quot;com.echomine.jabber.compat.packet.RegisterIQPacket&quot;/&gt;
++    &lt;packet ns=&quot;jabber:iq:gateway&quot; class=&quot;com.echomine.jabber.compat.packet.GatewayIQPacket&quot;/&gt;
+   &lt;/packets&gt;
+ &lt;/feridian&gt;
+
+Added: feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/GatewayIQPacketTest.java
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/GatewayIQPacketTest.java	2007-05-05 06:25:10 UTC (rev 107)
++++ feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/GatewayIQPacketTest.java	2007-05-31 15:12:52 UTC (rev 108)
+@@ -0,0 +1,54 @@
++package com.echomine.jabber.compat.packet;
++
++import java.io.Reader;
++import java.io.StringReader;
++
++import com.echomine.jibx.JiBXUtil;
++import com.echomine.xmpp.JID;
++import com.echomine.xmpp.XMPPTestCase;
++
++/**
++ * Test for gateway interaction (JID escaping) packets
++ */
++public class GatewayIQPacketTest extends XMPPTestCase {
++
++    private static final String DEFAULT_JID = &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/echomine-svn">FooBar at aim.jabber.org</A>&quot;;
++
++    private static final String DEFAULT_PROMPT = &quot;Screen Name&quot;;
++
++    private static final String DEFAULT_DESCRIPTION = &quot;Please enter the AOL Screen Name of the&quot;
++            + &quot;person you would like to contact.&quot;;
++
++    public void testMarshallGatewayIQPacket() throws Exception {
++        // TODO implement marshalling tests
++    }
++
++    public void testUnmarshallGatewayIQPacket() throws Exception {
++        Reader reader = new StringReader(&quot;&lt;query xmlns='jabber:iq:gateway'/&gt;&quot;);
++        GatewayIQPacket gatewayIQPacket = (GatewayIQPacket) JiBXUtil
++                .unmarshallObject(reader, GatewayIQPacket.class);
++        assertNotNull(gatewayIQPacket);
++        assertNull(gatewayIQPacket.getDesc());
++        assertNull(gatewayIQPacket.getPrompt());
++        assertNull(gatewayIQPacket.getJid());
++        reader.close();
++        reader = new StringReader(&quot;&lt;query xmlns='jabber:iq:gateway'&gt;&quot;
++                + &quot;&lt;desc&gt;&quot; + DEFAULT_DESCRIPTION + &quot;&lt;/desc&gt;&quot; + &quot;&lt;prompt&gt;&quot;
++                + DEFAULT_PROMPT + &quot;&lt;/prompt&gt;&quot; + &quot;&lt;/query&gt;&quot;);
++        gatewayIQPacket = (GatewayIQPacket) JiBXUtil.unmarshallObject(reader,
++                GatewayIQPacket.class);
++        assertNotNull(gatewayIQPacket);
++        assertEquals(DEFAULT_PROMPT, gatewayIQPacket.getPrompt());
++        assertEquals(DEFAULT_DESCRIPTION, gatewayIQPacket.getDesc());
++        assertNull(gatewayIQPacket.getJid());
++        reader.close();
++        reader = new StringReader(&quot;&lt;query xmlns='jabber:iq:gateway'&gt;&quot; + &quot;&lt;jid&gt;&quot;
++                + DEFAULT_JID + &quot;&lt;/jid&gt;&quot; + &quot;&lt;/query&gt;&quot;);
++        gatewayIQPacket = (GatewayIQPacket) JiBXUtil.unmarshallObject(reader,
++                GatewayIQPacket.class);
++        assertNotNull(gatewayIQPacket);
++        assertNull(gatewayIQPacket.getDesc());
++        assertNull(gatewayIQPacket.getPrompt());
++        assertEquals(JID.parseJID(DEFAULT_JID), gatewayIQPacket.getJid());
++    }
++}
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000000.html">[Echomine-svn] r107 - in	feridian/trunk/modules/jabber-compat/src/test:	java/com/echomine/jabber java/com/echomine/jabber/compat	java/com/echomine/jabber/compat/auth	java/com/echomine/jabber/compat/packet resources/com/echomine/jabber	resources/com/echomine/jabber/compat
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/echomine-svn">More information about the echomine-svn
+mailing list</a><br>
+</body></html>

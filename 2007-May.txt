@@ -1,0 +1,310 @@
+From ckchris at mail.berlios.de  Sat May  5 08:25:25 2007
+From: ckchris at mail.berlios.de (ckchris at mail.berlios.de)
+Date: Sat, 5 May 2007 08:25:25 +0200
+Subject: [Echomine-svn] r107 - in
+	feridian/trunk/modules/jabber-compat/src/test:
+	java/com/echomine/jabber java/com/echomine/jabber/compat
+	java/com/echomine/jabber/compat/auth
+	java/com/echomine/jabber/compat/packet resources/com/echomine/jabber
+	resources/com/echomine/jabber/compat
+Message-ID: <200705050625.l456PPa9016222@sheep.berlios.de>
+
+Author: ckchris
+Date: 2007-05-05 08:25:10 +0200 (Sat, 05 May 2007)
+New Revision: 107
+
+Added:
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/auth/
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/
+   feridian/trunk/modules/jabber-compat/src/test/resources/com/echomine/jabber/compat/
+   feridian/trunk/modules/jabber-compat/src/test/resources/com/echomine/jabber/compat/data/
+Removed:
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/auth/
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/packet/
+   feridian/trunk/modules/jabber-compat/src/test/resources/com/echomine/jabber/data/
+Modified:
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/auth/NonSASLAuthenticatorTest.java
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/AuthIQPacketTest.java
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/VersionIQPacketTest.java
+Log:
+- migrated all jabber-compat module's test classes to new package name
+  com.echomine.jabber.compat.
+
+
+
+Copied: feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/auth (from rev 106, feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/auth)
+
+Modified: feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/auth/NonSASLAuthenticatorTest.java
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/auth/NonSASLAuthenticatorTest.java	2007-05-04 10:15:43 UTC (rev 106)
++++ feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/auth/NonSASLAuthenticatorTest.java	2007-05-05 06:25:10 UTC (rev 107)
+@@ -1,8 +1,7 @@
+-package com.echomine.jabber.auth;
++package com.echomine.jabber.compat.auth;
+ 
+ import java.util.ArrayList;
+ 
+-import com.echomine.jabber.compat.auth.NonSASLAuthenticator;
+ import com.echomine.net.MockSocket;
+ import com.echomine.xmpp.BaseStreamTestCase;
+ import com.echomine.xmpp.XMPPAuthCallback;
+@@ -37,14 +36,14 @@
+     }
+     
+     public void testSuccessfulPlainAuth() throws Exception {
+-        String inRes = "com/echomine/jabber/data/NonSASLPlain_in.xml";
+-        String outRes = "com/echomine/jabber/data/NonSASLPlain_out.xml";
++        String inRes = "com/echomine/jabber/compat/data/NonSASLPlain_in.xml";
++        String outRes = "com/echomine/jabber/compat/data/NonSASLPlain_out.xml";
+         runAndCompare(inRes, outRes, auth, true, true);
+     }
+ 
+     public void testSuccessfulDigestAuth() throws Exception {
+-        String inRes = "com/echomine/jabber/data/NonSASLDigest_in.xml";
+-        String outRes = "com/echomine/jabber/data/NonSASLDigest_out.xml";
++        String inRes = "com/echomine/jabber/compat/data/NonSASLDigest_in.xml";
++        String outRes = "com/echomine/jabber/compat/data/NonSASLDigest_out.xml";
+         streamCtx.getAuthCallback().setPassword("Calli0pe".toCharArray());
+         sessCtx.setStreamId("3EE948B0");
+         runAndCompare(inRes, outRes, auth, true, true);
+
+Copied: feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet (from rev 106, feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/packet)
+
+Modified: feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/AuthIQPacketTest.java
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/packet/AuthIQPacketTest.java	2007-05-04 10:15:43 UTC (rev 106)
++++ feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/AuthIQPacketTest.java	2007-05-05 06:25:10 UTC (rev 107)
+@@ -1,8 +1,7 @@
+-package com.echomine.jabber.packet;
++package com.echomine.jabber.compat.packet;
+ 
+ import java.io.StringReader;
+ 
+-import com.echomine.jabber.compat.packet.AuthIQPacket;
+ import com.echomine.jibx.JiBXUtil;
+ import com.echomine.xmpp.XMPPTestCase;
+ import com.echomine.xmpp.packet.IQPacket;
+
+Modified: feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/VersionIQPacketTest.java
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/packet/VersionIQPacketTest.java	2007-05-04 10:15:43 UTC (rev 106)
++++ feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/VersionIQPacketTest.java	2007-05-05 06:25:10 UTC (rev 107)
+@@ -1,8 +1,7 @@
+-package com.echomine.jabber.packet;
++package com.echomine.jabber.compat.packet;
+ 
+ import java.io.StringReader;
+ 
+-import com.echomine.jabber.compat.packet.VersionIQPacket;
+ import com.echomine.jibx.JiBXUtil;
+ import com.echomine.xmpp.XMPPTestCase;
+ import com.echomine.xmpp.packet.IQPacket;
+
+Copied: feridian/trunk/modules/jabber-compat/src/test/resources/com/echomine/jabber/compat/data (from rev 106, feridian/trunk/modules/jabber-compat/src/test/resources/com/echomine/jabber/data)
+
+
+
+From echomine-svn at lists.berlios.de  Thu May 31 17:13:12 2007
+From: echomine-svn at lists.berlios.de (Echomine SVN)
+Date: Thu, 31 May 2007 17:13:12 +0200
+Subject: [Echomine SVN] r108 - in feridian/trunk/modules/jabber-compat:
+	bindings src/main/java/com/echomine/jabber/compat/packet
+	src/main/resources/META-INF
+	src/test/java/com/echomine/jabber/compat/packet
+Message-ID: <200705311513.l4VFDCLf014311@sheep.berlios.de>
+
+Author: jdevelop
+Date: 2007-05-31 17:12:52 +0200 (Thu, 31 May 2007)
+New Revision: 108
+
+Added:
+   feridian/trunk/modules/jabber-compat/bindings/jep-0100-binding.xml
+   feridian/trunk/modules/jabber-compat/src/main/java/com/echomine/jabber/compat/packet/GatewayIQPacket.java
+   feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/GatewayIQPacketTest.java
+Modified:
+   feridian/trunk/modules/jabber-compat/src/main/resources/META-INF/feridian-extensions.xml
+Log:
+Added gateway packet bindings and mappings, as per JEP-0100 specification
+
+
+Added: feridian/trunk/modules/jabber-compat/bindings/jep-0100-binding.xml
+===================================================================
+--- feridian/trunk/modules/jabber-compat/bindings/jep-0100-binding.xml	2007-05-05 06:25:10 UTC (rev 107)
++++ feridian/trunk/modules/jabber-compat/bindings/jep-0100-binding.xml	2007-05-31 15:12:52 UTC (rev 108)
+@@ -0,0 +1,14 @@
++<!-- Binding for JEP-0100: Gateway interaction -->
++<binding>
++    <!-- setup serializers/deserializers -->
++    <format type="com.echomine.xmpp.JID" serializer="com.echomine.xmpp.JID.toString"
++	deserializer="com.echomine.xmpp.JID.parseJID"/>
++
++    <mapping name="query" ns="jabber:iq:gateway" ordered='false'
++	class="com.echomine.jabber.compat.packet.GatewayIQPacket">
++	<namespace uri="jabber:iq:gateway" default="elements"/>
++	<value style="element" name="desc" field="desc" usage="optional" />
++	<value style="element" name="prompt" field="prompt" usage="optional" />
++	<value style="element" name="jid" field="jid" usage="optional" />
++    </mapping>
++</binding>
+
+Added: feridian/trunk/modules/jabber-compat/src/main/java/com/echomine/jabber/compat/packet/GatewayIQPacket.java
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/main/java/com/echomine/jabber/compat/packet/GatewayIQPacket.java	2007-05-05 06:25:10 UTC (rev 107)
++++ feridian/trunk/modules/jabber-compat/src/main/java/com/echomine/jabber/compat/packet/GatewayIQPacket.java	2007-05-31 15:12:52 UTC (rev 108)
+@@ -0,0 +1,80 @@
++package com.echomine.jabber.compat.packet;
++
++import com.echomine.xmpp.JID;
++import com.echomine.xmpp.packet.IQPacket;
++
++/**
++ * Packet implementation for gateway interaction
++ * <a href="http://www.xmpp.org/extensions/xep-0100.html#addressing-iqgateway">XEP-0100</a>
++ */
++public class GatewayIQPacket extends IQPacket {
++
++    /**
++     * Description
++     */
++    private String desc;
++
++    /**
++     * Promt message
++     */
++    private String prompt;
++
++    /**
++     * Jabber ID for user, escaped and returned by transport
++     */
++    private JID jid;
++
++    public GatewayIQPacket() {
++        desc = prompt = null;
++        jid = null;
++    }
++
++    public GatewayIQPacket(String desc, String prompt, JID jid) {
++        this.desc = desc;
++        this.prompt = prompt;
++        this.jid = jid;
++    }
++
++    /**
++     * @return the desc
++     */
++    public String getDesc() {
++        return desc;
++    }
++
++    /**
++     * @param desc the desc to set
++     */
++    public void setDesc(String desc) {
++        this.desc = desc;
++    }
++
++    /**
++     * @return the jid
++     */
++    public JID getJid() {
++        return jid;
++    }
++
++    /**
++     * @param jid the jid to set
++     */
++    public void setJid(JID jid) {
++        this.jid = jid;
++    }
++
++    /**
++     * @return the promt
++     */
++    public String getPrompt() {
++        return prompt;
++    }
++
++    /**
++     * @param promt the promt to set
++     */
++    public void setPrompt(String promt) {
++        this.prompt = promt;
++    }
++
++}
+
+Modified: feridian/trunk/modules/jabber-compat/src/main/resources/META-INF/feridian-extensions.xml
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/main/resources/META-INF/feridian-extensions.xml	2007-05-05 06:25:10 UTC (rev 107)
++++ feridian/trunk/modules/jabber-compat/src/main/resources/META-INF/feridian-extensions.xml	2007-05-31 15:12:52 UTC (rev 108)
+@@ -6,5 +6,6 @@
+     <packet ns="jabber:iq:auth" class="com.echomine.jabber.compat.packet.AuthIQPacket"/>
+     <packet ns="jabber:iq:version" class="com.echomine.jabber.compat.packet.VersionIQPacket"/>
+     <packet ns="jabber:iq:register" class="com.echomine.jabber.compat.packet.RegisterIQPacket"/>
++    <packet ns="jabber:iq:gateway" class="com.echomine.jabber.compat.packet.GatewayIQPacket"/>
+   </packets>
+ </feridian>
+
+Added: feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/GatewayIQPacketTest.java
+===================================================================
+--- feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/GatewayIQPacketTest.java	2007-05-05 06:25:10 UTC (rev 107)
++++ feridian/trunk/modules/jabber-compat/src/test/java/com/echomine/jabber/compat/packet/GatewayIQPacketTest.java	2007-05-31 15:12:52 UTC (rev 108)
+@@ -0,0 +1,54 @@
++package com.echomine.jabber.compat.packet;
++
++import java.io.Reader;
++import java.io.StringReader;
++
++import com.echomine.jibx.JiBXUtil;
++import com.echomine.xmpp.JID;
++import com.echomine.xmpp.XMPPTestCase;
++
++/**
++ * Test for gateway interaction (JID escaping) packets
++ */
++public class GatewayIQPacketTest extends XMPPTestCase {
++
++    private static final String DEFAULT_JID = "FooBar at aim.jabber.org";
++
++    private static final String DEFAULT_PROMPT = "Screen Name";
++
++    private static final String DEFAULT_DESCRIPTION = "Please enter the AOL Screen Name of the"
++            + "person you would like to contact.";
++
++    public void testMarshallGatewayIQPacket() throws Exception {
++        // TODO implement marshalling tests
++    }
++
++    public void testUnmarshallGatewayIQPacket() throws Exception {
++        Reader reader = new StringReader("<query xmlns='jabber:iq:gateway'/>");
++        GatewayIQPacket gatewayIQPacket = (GatewayIQPacket) JiBXUtil
++                .unmarshallObject(reader, GatewayIQPacket.class);
++        assertNotNull(gatewayIQPacket);
++        assertNull(gatewayIQPacket.getDesc());
++        assertNull(gatewayIQPacket.getPrompt());
++        assertNull(gatewayIQPacket.getJid());
++        reader.close();
++        reader = new StringReader("<query xmlns='jabber:iq:gateway'>"
++                + "<desc>" + DEFAULT_DESCRIPTION + "</desc>" + "<prompt>"
++                + DEFAULT_PROMPT + "</prompt>" + "</query>");
++        gatewayIQPacket = (GatewayIQPacket) JiBXUtil.unmarshallObject(reader,
++                GatewayIQPacket.class);
++        assertNotNull(gatewayIQPacket);
++        assertEquals(DEFAULT_PROMPT, gatewayIQPacket.getPrompt());
++        assertEquals(DEFAULT_DESCRIPTION, gatewayIQPacket.getDesc());
++        assertNull(gatewayIQPacket.getJid());
++        reader.close();
++        reader = new StringReader("<query xmlns='jabber:iq:gateway'>" + "<jid>"
++                + DEFAULT_JID + "</jid>" + "</query>");
++        gatewayIQPacket = (GatewayIQPacket) JiBXUtil.unmarshallObject(reader,
++                GatewayIQPacket.class);
++        assertNotNull(gatewayIQPacket);
++        assertNull(gatewayIQPacket.getDesc());
++        assertNull(gatewayIQPacket.getPrompt());
++        assertEquals(JID.parseJID(DEFAULT_JID), gatewayIQPacket.getJid());
++    }
++}
+
+
+

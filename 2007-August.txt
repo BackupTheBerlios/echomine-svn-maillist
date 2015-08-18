@@ -1,0 +1,30 @@
+From echomine-svn at lists.berlios.de  Wed Aug 15 10:50:45 2007
+From: echomine-svn at lists.berlios.de (Echomine SVN)
+Date: Wed, 15 Aug 2007 10:50:45 +0200
+Subject: [Echomine SVN] r109 - feridian/trunk/modules/jabber-compat/bindings
+Message-ID: <200708150850.l7F8ojUl016593@sheep.berlios.de>
+
+Author: jdevelop
+Date: 2007-08-15 10:50:41 +0200 (Wed, 15 Aug 2007)
+New Revision: 109
+
+Modified:
+   feridian/trunk/modules/jabber-compat/bindings/jep-0077-binding.xml
+Log:
+Added mapping for "unregister" field in stanza to allow unregistering functionality in Feridian
+
+
+Modified: feridian/trunk/modules/jabber-compat/bindings/jep-0077-binding.xml
+===================================================================
+--- feridian/trunk/modules/jabber-compat/bindings/jep-0077-binding.xml	2007-05-31 15:12:52 UTC (rev 108)
++++ feridian/trunk/modules/jabber-compat/bindings/jep-0077-binding.xml	2007-08-15 08:50:41 UTC (rev 109)
+@@ -9,5 +9,6 @@
+ 	<value style="element" name="key" field="key" usage="optional" />
+ 	<value style="element" name="email" field="email" usage="optional" />
+ 	<value style="element" name="registered" field="registered" usage="optional" />
++	<value style="element" name="remove" field="remove" usage="optional" />
+     </mapping>
+ </binding>
+
+
+
